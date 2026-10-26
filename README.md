@@ -1,168 +1,161 @@
-# AI Blogger Pro — Full-Stack JavaScript Migration
+# AI Blogger Pro — JavaScript Version
 
-Autonomous Multi-Agent SEO Blog Generation Engine migrated from Python to a pure JavaScript full-stack web application.
+AI Blogger Pro is a multi-agent blog generation application that helps users create SEO-friendly blog posts through an automated workflow. This version uses JavaScript for both the frontend and backend, based on the original Python project.
 
----
+## Project Structure
 
-## 🏗 Architecture Overview
-
-```
+```text
 web-js/
-├── frontend/               # Next.js 14 (App Router, React 18, Tailwind CSS, Lucide icons)
+├── frontend/             # Next.js frontend
 │   ├── app/
-│   │   ├── globals.css     # Dark glassmorphism theme & Markdown typography
-│   │   ├── layout.js       # App metadata & root HTML layout (JavaScript)
-│   │   └── page.js         # Interactive dashboard, pipeline visualizer & SEO analytics
-│   ├── .env.example
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   └── page.js
 │   └── package.json
 │
-├── backend/                # NestJS 12 in Pure JavaScript (Babel legacy decorators, Express)
+├── backend/              # NestJS backend
 │   ├── src/
-│   │   ├── agents/         # Multi-Agent Workflow
-│   │   │   ├── research.agent.js   # Agent 1: Live Tavily Web Search & synthesis
-│   │   │   ├── planner.agent.js    # Agent 2: SEO Outline & intent structure
-│   │   │   ├── writer.agent.js     # Agent 3: Complete Markdown blog drafting
-│   │   │   └── seo.agent.js        # Agent 4: Title, headings & meta optimization
+│   │   ├── agents/
+│   │   │   ├── research.agent.js
+│   │   │   ├── planner.agent.js
+│   │   │   ├── writer.agent.js
+│   │   │   └── seo.agent.js
 │   │   ├── services/
-│   │   │   ├── blog.service.js         # 4-stage agent orchestrator
-│   │   │   └── seo-analyzer.service.js # Quantitative SEO scoring (0-100) & audit
 │   │   ├── controllers/
-│   │   │   └── blog.controller.js      # REST API endpoints (@Bind JavaScript decorators)
 │   │   ├── database/
-│   │   │   └── database.service.js     # PostgreSQL client with seamless fallback storage
 │   │   ├── utils/
-│   │   │   ├── api.js      # OpenRouter API client (native fetch)
-│   │   │   └── search.js   # Tavily Search API client
-│   │   ├── config.js       # Environment configuration
-│   │   ├── app.module.js
-│   │   └── main.js         # NestJS bootstrap with CORS & port binding
-│   ├── .babelrc            # Babel 8 legacy decorators configuration for JS
-│   ├── .env.example
+│   │   ├── config.js
+│   │   └── main.js
 │   └── package.json
 │
-├── .env.example            # Root environment template
+├── .env.example
 ├── .gitignore
-├── package.json            # Monorepo task runner
+├── package.json
 └── README.md
 ```
 
----
+## Technologies Used
 
-## ⚡ Tech Stack
+- **Frontend:** Next.js, React, Tailwind CSS
+- **Backend:** Node.js and NestJS
+- **Language:** JavaScript
+- **AI:** OpenRouter API
+- **Web Search:** Tavily Search API
+- **Database:** PostgreSQL, with local file storage as a fallback
+- **Communication:** REST API
 
-- **Frontend**: Next.js 14, React 18, Tailwind CSS (Pure JavaScript, `.js` / `.jsx`)
-- **Backend**: NestJS 12, Node.js (Pure JavaScript with Babel 8)
-- **AI Integration**: OpenRouter API (`openai/gpt-4.1-mini`)
-- **Web Search**: Tavily Search API (with resilient web synthesis fallback)
-- **Database**: PostgreSQL support via `pg.Pool` (with automatic fallback to persistent JSON storage)
-- **Protocol**: REST APIs with CORS
+## Main Features
 
----
+### 1. Multi-Agent Blog Generation
 
-## 🚀 Quick Start Guide
+The application uses four agents to generate a blog:
 
-### 1. Prerequisites
-- **Node.js** v18+ (tested on Node v26)
-- **npm** v9+
+- **Research Agent:** Collects relevant information and research sources.
+- **Planner Agent:** Creates an outline based on the topic and target keyword.
+- **Writer Agent:** Generates the blog content using the outline.
+- **SEO Agent:** Improves the content structure and prepares SEO metadata.
 
-### 2. Configure Environment Variables
-Inside `web-js/backend/`:
+### 2. Blog Generation Dashboard
+
+Users can enter a topic, specify a target keyword, select a writing style, and generate a complete blog through the web interface.
+
+The dashboard displays the progress of the agents as they work through the pipeline.
+
+### 3. SEO Analysis
+
+The application evaluates generated content using metrics such as:
+
+- SEO score
+- Word count and estimated reading time
+- Keyword density
+- Heading structure
+- Meta description length
+
+It also provides an audit checklist to help identify areas for improvement.
+
+### 4. Blog Preview and Export
+
+Generated content can be viewed in different formats:
+
+- Rendered blog
+- Raw Markdown
+- Planner outline
+- Research sources
+
+Users can also copy the Markdown content or download it as a `.md` file.
+
+### 5. Blog History
+
+Previously generated blogs can be saved and accessed later. The application supports PostgreSQL storage when configured and local file storage as a fallback.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+- An OpenRouter API key
+- A Tavily API key (optional, for web research)
+- PostgreSQL (optional, when using database persistence)
+
+### 1. Configure the Backend
+
+Open a terminal in the backend directory:
+
 ```bash
-cp .env.example .env
+cd web-js/backend
+npm install
 ```
-Ensure your `.env` contains your OpenRouter key:
-```ini
-OPENROUTER_API_KEY=your_openrouter_api_key_here
+
+Create a `.env` file using `.env.example` as a template, then configure the required environment variables:
+
+```env
+OPENROUTER_API_KEY=your_openrouter_api_key
 MODEL=openai/gpt-4.1-mini
-TAVILY_API_KEY=your_tavily_api_key_here # (Optional)
+TAVILY_API_KEY=your_tavily_api_key
 PORT=3001
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/ai_blogger_pro # (Optional)
 ```
 
-Inside `web-js/frontend/`:
+If you want to use PostgreSQL, configure `DATABASE_URL` with your database connection string.
+
+### 2. Configure the Frontend
+
+Open another terminal:
+
 ```bash
-cp .env.example .env.local
+cd web-js/frontend
+npm install
 ```
-```ini
+
+Create `.env.local` from the frontend's `.env.example` file and set:
+
+```env
 NEXT_PUBLIC_API_URL=http://localhost:3001
 ```
 
----
+### 3. Start the Application
 
-## 🏃 Running the Application
+Start the backend:
 
-### Option A: From root of `web-js`
-Run backend:
 ```bash
-npm run start:backend
-```
-In another terminal, run frontend:
-```bash
-npm run start:frontend
-```
-
-### Option B: Running individually
-#### Start Backend (Port 3001):
-```bash
-cd backend
+cd web-js/backend
 npm start
 ```
-*Backend will be running on `http://localhost:3001`*
 
-#### Start Frontend (Port 3000):
+Then, in a separate terminal, start the frontend:
+
 ```bash
-cd frontend
+cd web-js/frontend
 npm run dev
 ```
-*Open `http://localhost:3000` in your browser.*
 
----
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📡 REST API Documentation
+If the root `package.json` provides the corresponding scripts, the backend and frontend can also be started from the project root.
 
-| Method | Endpoint | Description |
+## API Endpoints
+
+| Method | Endpoint | Purpose |
 |---|---|---|
-| `GET` | `/api/health` | Healthcheck, model info & storage engine status |
-| `POST` | `/api/blog/generate` | Runs the 4-agent pipeline to generate an SEO blog |
-| `GET` | `/api/blog/history` | Fetches previously generated blogs & metadata |
-| `GET` | `/api/blog/:id` | Retrieves a specific blog by ID with full logs |
-
-### Sample Generation Request
-```bash
-curl -X POST http://localhost:3001/api/blog/generate \
-  -H "Content-Type: application/json" \
-  -d '{
-    "topic": "The Future of Autonomous AI Agents",
-    "keyword": "AI agents",
-    "tone": "Professional & Informative"
-  }'
-```
-
----
-
-## 🔍 Features Implemented
-
-1. **Autonomous 4-Agent Pipeline**:
-   - **Research Agent**: Scrapes or synthesizes live facts and sources.
-   - **Planner Agent**: Generates structured SEO outlines (Title, intro, H2s, H3s, conclusion).
-   - **Writer Agent**: Produces complete, in-depth Markdown blog posts.
-   - **SEO Agent**: Optimizes CTR, headings, readability, and extracts meta descriptions.
-2. **Real-time Pipeline Dashboard**:
-   - Live visual status badges (`Waiting`, `Working...`, `Completed ✓`) for each agent.
-   - Dynamic progress bar tracking stages.
-3. **SEO Quality Analyzer**:
-   - Scores blog from 0–100.
-   - Computes word count, reading time, keyword density, and heading hierarchy.
-   - Actionable audit checklist.
-4. **Tabbed Inspection**:
-   - Rendered Blog view
-   - Raw Markdown source
-   - Planner Outline
-   - Research Data & sources
-5. **History & Persistence**:
-   - PostgreSQL persistence when configured.
-   - Resilient file storage fallback to ensure zero downtime.
-   - History slide-over drawer to browse and reload past articles.
-6. **Utility Actions**:
-   - One-click copy Markdown to clipboard.
-   - Download as `.md` file.
+| GET | `/api/health` | Check backend status |
+| POST | `/api/blog/g

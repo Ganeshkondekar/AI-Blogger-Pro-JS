@@ -1,0 +1,22 @@
+{
+  "name": "ai-blogger-pro-js",
+  "version": "1.0.0",
+  "description": "AI Blogger Pro - Full-Stack JavaScript Migration (Next.js + NestJS + OpenRouter)",
+  "private": true,
+  "scripts": {
+    "start:backend": "npm --prefix backend start",
+    "dev:backend": "npm --prefix backend run start:dev",
+    "start:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build"
+  },
+  "keywords": [
+    "ai",
+    "blogger",
+    "nestjs",
+    "nextjs",
+    "openrouter",
+    "javascript"
+  ],
+  "author": "Tech Ahir AI Full-Stack Developer",
+  "license": "MIT"
+}
